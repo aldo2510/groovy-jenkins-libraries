@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'APP_NAME', defaultValue: 'payments-api')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'])
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    def app = params.APP_NAME
+                    def environment = params.ENVIRONMENT
+
+                    echo "Build de ${app}"
+                    echo "Environment: ${environment}"
+                }
+            }
+        }
+
+        stage('Summary') {
+            steps {
+                script {
+                    def data = [
+                        application: params.APP_NAME,
+                        environment: params.ENVIRONMENT,
+                        buildNumber: env.BUILD_NUMBER
+                    ]
+
+                    echo "Resumen: ${data}"
+                }
+            }
+        }
+    }
+}
