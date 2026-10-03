@@ -1,0 +1,16 @@
+@Library('groovy-jenkins-libraries') _
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                buildApp(
+                    app: 'payments-api',
+                    environment: 'dev'
+                )
+            }
+        }
+    }
+}
